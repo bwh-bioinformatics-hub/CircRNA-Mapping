@@ -15,26 +15,24 @@ workflow circRNA_alignment
     String out
 
     # aligning to reference genome with ciri-full
-    call alignment
+    call bwa
     {
     	input:
           	sample=sample,
             gtf=gtf,
-            fa=fa,
-            out=out
+            fa=fa
     }
     
-    call mapping
+    call ciri
     {
     	input:
-          	sam=alignment.sam,
+          	sam=bwa.sam,
             gtf=gtf,
-            fa=fa,
-            out=out
+            fa=fa
     }
 }
 
-task alignment
+task bwa
 {
 	File sample
     File gtf
@@ -63,7 +61,7 @@ task alignment
   	}
 }
 
-task mapping
+task ciri
 {
 	File sam
     File gtf
