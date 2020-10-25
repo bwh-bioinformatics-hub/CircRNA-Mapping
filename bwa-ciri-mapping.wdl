@@ -38,13 +38,6 @@ workflow circRNA_alignment
     	Array[File] outputFiles = glob("ciri_output/*")
     }
     
-    runtime 
-    {
-        docker: "tveta/runciri:v1"
-        memory: "60G"
-        cpu: "4"
-        disk: "local-disk 2000 HDD"
-  	}
 }
 
 task alignment
@@ -62,6 +55,14 @@ task alignment
         bwa mem -T 19 -t 4 ${fa} ${sample} 1> ciri_output/${out}.sam 2> ${out}_bwa.log
 
 	}
+        
+    runtime 
+    {
+        docker: "tveta/runciri:v1"
+        memory: "60G"
+        cpu: "4"
+        disk: "local-disk 2000 HDD"
+  	}
 }
 
 task mapping
@@ -80,4 +81,12 @@ task mapping
             -A ${gtf} \
             -T 4
 	}
+
+    runtime 
+    {
+        docker: "tveta/runciri:v1"
+        memory: "60G"
+        cpu: "4"
+        disk: "local-disk 2000 HDD"
+  	}
 }
