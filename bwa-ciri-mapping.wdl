@@ -27,7 +27,7 @@ workflow circRNA_alignment
     call mapping
     {
     	input:
-          	sample=sample,
+          	sam=alignment.sam,
             gtf=gtf,
             fa=fa,
             out=out
@@ -49,13 +49,18 @@ task alignment
     
     command
     {
-        mkdir ciri_output
-		bwa index ${fa}
+        bwa index ${fa}
         
-        bwa mem -T 19 -t 4 ${fa} ${sample} 1> ciri_output/${out}.sam 2> ${out}_bwa.log
+        bwa mem -T 19 -t 4 ${fa} ${sample} 1> ${out}.sam 2> ${out}_bwa.log
 
 	}
-        
+    
+    output
+    {
+        File sam = ${out}.sam
+        File log = ${out}_bwa.log
+    }
+
     runtime 
     {
         docker: "tveta/runciri:v1"
@@ -67,7 +72,7 @@ task alignment
 
 task mapping
 {
-	File sample
+	File sam
     File gtf
     File fa
     String out
@@ -75,12 +80,17 @@ task mapping
     command
     {
         CIRI2.pl \
-            -I ciri_output/${out}.sam \
-            -O ciri_output/${out}.ciri \
+            -I ${sam} \
+            -O ${out}.ciri \
             -F ${fa} \
             -A ${gtf} \
             -T 4
 	}
+
+    output
+    {
+        File out = ${out}.ciri
+    }
 
     runtime 
     {
