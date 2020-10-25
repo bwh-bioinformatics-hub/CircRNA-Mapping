@@ -39,20 +39,19 @@ task alignment
 	File sample
     File gtf
     File fa
-    String out
     
     command
     {
         bwa index ${fa}
         
-        bwa mem -T 19 -t 4 ${fa} ${sample} 1> ${out}.sam 2> ${out}_bwa.log
+        bwa mem -T 19 -t 4 ${fa} ${sample} 1> aln.sam 2> aln_bwa.log
 
 	}
     
     output
     {
-        File sam = ${out}.sam
-        File log = ${out}_bwa.log
+        File sam = "aln.sam"
+        File log = "aln_bwa.log"
     }
 
     runtime 
@@ -69,13 +68,12 @@ task mapping
 	File sam
     File gtf
     File fa
-    String out
     
     command
     {
         CIRI2.pl \
             -I ${sam} \
-            -O ${out}.ciri \
+            -O aln.ciri \
             -F ${fa} \
             -A ${gtf} \
             -T 4
@@ -83,7 +81,7 @@ task mapping
 
     output
     {
-        File out = ${out}.ciri
+        File out = "aln.ciri"
     }
 
     runtime 
