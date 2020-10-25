@@ -1,0 +1,1 @@
+{"circRNA_alignment.fa":"gs://covid19_sequence_data/genome/Chlorocebus_sabaeus.ChlSab1.1.Sars_cov_2.dna.toplevel.fa","circRNA_alignment.gtf":"gs://covid19_sequence_data/annotation/Chlorocebus_sabaeus.ChlSab1.1.Sars_cov_2.100.gtf","circRNA_alignment.out":"nanopore_ciri_all","circRNA_alignment.sample":"gs://covid19_sequence_data/Nanopore/VeroInf24h.all.fastq"}
