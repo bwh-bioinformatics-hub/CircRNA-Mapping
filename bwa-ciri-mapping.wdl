@@ -32,12 +32,6 @@ workflow circRNA_alignment
             fa=fa,
             out=out
     }
-    
-    output
-    {
-    	Array[File] outputFiles = glob("ciri_output/*")
-    }
-    
 }
 
 task alignment
